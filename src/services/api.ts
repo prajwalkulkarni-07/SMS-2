@@ -1,7 +1,21 @@
 import axios from "axios";
 
+const resolveBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (envUrl) return envUrl;
+
+  const host = window.location.hostname;
+  if (host === "localhost" || host === "127.0.0.1") {
+    return "http://localhost:5000/api";
+  }
+
+  return "https://sms-2-backend.onrender.com/api";
+};
+
+const baseURL = resolveBaseUrl();
+
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL,
   headers: { "Content-Type": "application/json" },
 });
 
